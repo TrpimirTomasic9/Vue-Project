@@ -8,6 +8,9 @@
                 </button>
                 <div class='collapse navbar-collapse navbar-center' id='navbarSupportedContent'>
                     <ul class='navbar-nav ms-auto mb-2 mb-lg-0'>
+                        <li class='nav-item' v-if="isUser">
+                            <router-link to="" class="nav-link" id="activeuser">{{activeUser}}</router-link>
+                        </li>
                         <li class='nav-item'>
                             <router-link to="/" class="nav-link">Home</router-link>
                         </li>
@@ -53,6 +56,7 @@ import VueCookies from 'vue-cookies'
 
 var showLogin = true;
 var isAdmin = false;
+var isUser = false;
 
 var email = VueCookies.get('email');
 if (email != null) {
@@ -60,6 +64,10 @@ if (email != null) {
     var category = VueCookies.get('category');
     if (category == "admin") {
         isAdmin = true;
+    }
+    if (category == "user") {
+        isUser = true;
+        
     }
 } else {
 
@@ -75,13 +83,21 @@ export default {
             showModal: false,
             logout: false,
             showLogin,
-            isAdmin
+            isAdmin,
+            isUser,
+            activeUser: null
         }
+    },
+    mounted(){
+        this.activeUser = VueCookies.get('firstname');
     },
     methods: {
         Logout() {
             VueCookies.remove('email');
             VueCookies.remove('password');
+            VueCookies.remove('id');
+            VueCookies.remove('firstname');
+            VueCookies.remove('category');
             window.location.href = '/';
         }
     }
@@ -110,6 +126,11 @@ nav {
 
 button {
     text-shadow: 1px 1px black;
+}
+
+#activeuser{
+    color: green;
+    text-transform: uppercase;
 }
 
 </style>

@@ -5,120 +5,84 @@
       "title": "Donnie Darko",
       "details": "(2001) Sci-fi/Drama 1h 53m 8/10",
       "description": "After narrowly escaping a bizarre accident, a troubled teenager is plagued by visions of a man in a large rabbit suit who manipulates him to commit a series of crimes",
-      "image": "http://localhost:5173/src/assets/images/DonnieDarko.jpg",
-      "watchlist": "yes",
-      "favourite": "yes",
-      "watched": "yes"
+      "image": "http://localhost:5173/src/assets/images/DonnieDarko.jpg"
     },
     {
       "id": 2,
       "title": "The Mist",
       "details": "(2007)  Horror/Thriller 2h 6m 7.1/10",
       "description": "A freak storm unleashes a species of bloodthirsty creatures on a small town, where a small band of citizens hole up in a supermarket and fight for their lives",
-      "image": "http://localhost:5173/src/assets/images/TheMist.jpg",
-      "watchlist": "no",
-      "favourite": "yes",
-      "watched": "yes"
+      "image": "http://localhost:5173/src/assets/images/TheMist.jpg"
     },
     {
       "id": 3,
       "title": "The Thing",
       "details": "(1982) Horror/Sci-fi 1h 49m 8.2/10",
       "description": "A research team in Antarctica is hunted by a shape-shifting alien that assumes the appearance of its victims",
-      "image": "http://localhost:5173/src/assets/images/TheThing.jpg",
-      "watchlist": "no",
-      "favourite": "yes",
-      "watched": "yes"
+      "image": "http://localhost:5173/src/assets/images/TheThing.jpg"
     },
     {
       "id": 4,
       "title": "The Shining",
       "details": "(1980) Horror/Mystery 2h 26m",
       "description": "A family heads to an isolated hotel for the winter where a sinister presence influences the father into violence, while his psychic son sees horrific forebodings from both past and future",
-      "image": "http://localhost:5173/src/assets/images/Shining.jpg",
-      "watchlist": "yes",
-      "favourite": "yes",
-      "watched": "yes"
+      "image": "http://localhost:5173/src/assets/images/Shining.jpg"
     },
     {
       "id": 5,
       "title": "War Of The Worlds",
       "details": "(2005) Sci-fi/Action 1h 56m",
       "description": "An alien invasion threatens the future of humanity. The catastrophic nightmare is depicted through the eyes of one American family fighting for survival.",
-      "image": "http://localhost:5173/src/assets/images/WarOfTheWorlds.jpg",
-      "watchlist": "no",
-      "favourite": "no",
-      "watched": "no"
+      "image": "http://localhost:5173/src/assets/images/WarOfTheWorlds.jpg"
     },
     {
       "id": 6,
       "title": "Silent Hill",
       "details": "(2006) Horror/Thriller 2h 7m",
       "description": "A woman, Rose, goes in search for her adopted daughter within the confines of a strange, desolate town called Silent Hill.",
-      "image": "http://localhost:5173/src/assets/images/SilentHill.jpg",
-      "watchlist": "no",
-      "favourite": "no",
-      "watched": "no"
+      "image": "http://localhost:5173/src/assets/images/SilentHill.jpg"
     },
     {
       "id": 7,
       "title": "28 Days Later",
       "details": "2002 Horror/Sci-fi 1h 53m",
       "description": "Four weeks after a mysterious, incurable virus spreads throughout the UK, a handful of survivors try to find sanctuary.",
-      "image": "http://localhost:5173/src/assets/images/28DaysLater.jpg",
-      "watchlist": "no",
-      "favourite": "no",
-      "watched": "no"
+      "image": "http://localhost:5173/src/assets/images/28DaysLater.jpg"
     },
     {
       "id": 8,
       "title": "Ghostbusters",
       "details": "1984 Comedy/Fantasy 1h 45m",
       "description": "Three parapsychologists forced out of their university funding set up shop as a unique ghost removal service in New York City, attracting frightened yet skeptical customers.",
-      "image": "http://localhost:5173/src/assets/images/ghostbusters.jpg",
-      "watchlist": "no",
-      "favourite": "no",
-      "watched": "no"
+      "image": "http://localhost:5173/src/assets/images/ghostbusters.jpg"
     },
     {
       "id": 9,
       "title": "Cloverfield",
       "details": "2008 Sci-fi/Action 1h 25m",
       "description": "A group of friends venture deep into the streets of New York on a rescue mission during a rampaging monster attack.",
-      "image": "http://localhost:5173/src/assets/images/Cloverfield.jpg",
-      "watchlist": "no",
-      "favourite": "no",
-      "watched": "no"
+      "image": "http://localhost:5173/src/assets/images/Cloverfield.jpg"
     },
     {
       "id": 10,
       "title": "Event Horizon",
       "details": "1997 Sci-fi/Horror 1h 36m",
       "description": "A rescue crew investigates a spaceship that disappeared into a black hole and has now returned...with someone or something new on-board.",
-      "image": "http://localhost:5173/src/assets/images/EventHoziton.jpg",
-      "watchlist": "no",
-      "favourite": "no",
-      "watched": "no"
+      "image": "http://localhost:5173/src/assets/images/EventHoziton.jpg"
     },
     {
       "id": 11,
       "title": "The 13th Warrior",
       "details": "1999 ‧ Adventure/Action ‧ 1h 43m",
       "description": "A man, having fallen in love with the wrong woman, is sent by the sultan himself on a diplomatic mission to a distant land as an ambassador. Stopping at a Viking village port to restock on supplies, he finds himself unwittingly embroiled in a quest to banish a mysterious threat in a distant Viking land.",
-      "image": "http://localhost:5173/src/assets/images/13thWarriror.jpg",
-      "watchlist": "no",
-      "favourite": "no",
-      "watched": "no"
+      "image": "http://localhost:5173/src/assets/images/13thWarriror.jpg"
     },
     {
       "id": 12,
       "title": "The Ritual",
       "details": "2017 Horror/Mystery 1h 34m",
       "description": "A group of old college friends reunite for a trip to a forest in Sweden, Northern Europe, but encounter a menacing presence there stalking them.",
-      "image": "http://localhost:5173/src/assets/images/TheRitual.jpg",
-      "watchlist": "no",
-      "favourite": "no",
-      "watched": "no"
+      "image": "http://localhost:5173/src/assets/images/TheRitual.jpg"
     }
   ],
   "users": [
@@ -141,19 +105,32 @@
     {
       "firstname": "user2",
       "lastname": "userman",
-      "email": "user2@gmail.com",
+      "email": "user23@gmail.com",
       "password": "Sifra123456",
       "category": "user",
       "id": 3
     }
   ],
-  "user-movies": [
+  "user-movies-watchlist": [
     {
-      "userid": "",
-      "movieid": "",
-      "watched": "",
-      "favourite": "",
-      "watchlist": ""
+      "userid": "2",
+      "movieid": 7,
+      "watchlist": true,
+      "id": 1
+    },
+    {
+      "userid": "2",
+      "movieid": 8,
+      "watchlist": true,
+      "id": 2
+    },
+    {
+      "userid": "2",
+      "movieid": 9,
+      "watchlist": true,
+      "id": 3
     }
-  ]
+  ],
+  "user-movies-favourites": [],
+  "user-movies-watched": []
 }

@@ -7,10 +7,11 @@
                         <button type="button" class="close" @click="$emit('toggleModel');">x</button>
                         <h1 class='text-center'>Login</h1>
                         <label>Email</label>
-                        <input type='email' required id='email' placeholder="Enter Email" />
+                        <input type='email' id='email' placeholder="Enter Email" v-model="email"/>
+                        <div class="input-message" v-if="emailError"><h6>{{emailError}}</h6></div>
                         <label>Password</label>
-                        <input type='password' required id='password' placeholder="Enter Password" />
-                        <div v-if="passwordError" class="error">{{ passwordError }}</div>
+                        <input type='password' id='password' placeholder="Enter Password" v-model="password" />
+                        <div class="input-message" v-if="passwordError"><h6>{{passwordError}}</h6></div>
                         <div class="submit mb-3">
                             <button class="btn btn-light mt-3">LogIn</button>
                         </div>
@@ -27,13 +28,16 @@
                         <h1 class='text-center'>Register</h1>
                         <label>First Name:</label>
                         <input type="text" placeholder="Enter First Name" id="firstname">
+                        <div class="input-message" v-if="firstnameError"><h6>{{firstnameError}}</h6></div>
                         <label>Last Name:</label>
                         <input type="text" placeholder="Enter Last Name" id="lastname">
+                        <div class="input-message" v-if="lastnameError"><h6>{{lastnameError}}</h6></div>
                         <label>Email:</label>
                         <input type='email' placeholder="Enter Email" id="email">
+                        <div class="input-message" v-if="emailError"><h6>{{emailError}}</h6></div>
                         <label>Password:</label>
                         <input type='password' placeholder="Enter Password" id="password">
-                        <div v-if="passwordError" class="error">{{ passwordError }}</div>
+                        <div class="input-message" v-if="passwordError"><h6>{{passwordError}}</h6></div>
                         <div class="submit mb-3">
                             <button class="btn btn-light mt-3">Sign-up</button>
                         </div>
@@ -57,52 +61,161 @@ var userURL = baseURL + "users";
 export default {
     data() {
         return {
-            email: '',
-            password: '',
-            passwordError: '',
+            users: [],
+            email: null,
+            password: null,
+            emailError: null,
+            passwordError: null,
             login: true,
             signup: true,
-            name: '',
-            lastname: '',
-            passwordError: '',
+            firstname: null,
+            firstnameError: null,
+            lastname: null,
+            lastnameError: null,
+            signupValidation : true,
+            passwordValidation: false
         }
     },
     methods: {
-        async loginSubmit() {
-            console.log('email: ', document.getElementById('email').value);
-            console.log('password: ', document.getElementById('password').value);
+        async loginSubmit() 
+        {
+            var email = document.getElementById('email').value;
+            if(email.length == 0)
+            {
+                this.emailError = "Field is empty";
+            }
+            else 
+            {
+                this.emailError = null
+            }
+            
+            var password = document.getElementById('password').value;
+            if(password.length == 0)
+            {
+                this.passwordError = "Field is empty!";
+            }
+            else if(password.length>0 && password.length<8)
+            { 
+                this.passwordError = "Password is too short!"
+            }
+            else
+            {
+                this.passwordError = null
+            }
 
             const res = await axios.get(userURL);
             this.users = res.data;
 
-            for (var i = 0; i < this.users.length; i++) {
-                if (this.users[i].email == document.getElementById('email').value) {
-                    if (this.users[i].password == document.getElementById('password').value) {
+            for (var i = 0; i < this.users.length; i++)
+            {
+                if (this.users[i].email == document.getElementById('email').value)
+                {
+                    if (this.users[i].password == document.getElementById('password').value)
+                    {
+                        this.passwordValidation = true;
                         VueCookies.set('email', document.getElementById('email').value, "60min");
                         VueCookies.set('password', document.getElementById('password').value, "60min");
                         VueCookies.set('category', this.users[i].category, "60min");
+                        VueCookies.set('firstname', this.users[i].firstname, "60min");
+                        VueCookies.set('id', this.users[i].id, "60min");
 
-                        if (this.users[i].category == "user") {
+                        if (this.users[i].category == "user")
+                        {
                             window.location.href = '/';
-                        } else if (this.users[i].category == "admin") {
+                            alert("Login successful");
+                        } else if (this.users[i].category == "admin")
+                        {
                             window.location.href = '/dashboard';
+                            alert("Registration successful");
                         }
                     }
                 }
             }
+             if(this.passwordValidation == false){ this.passwordError = "Inccorect password or username!"}
         },
-        async signupSubmit() {
-            const res = await axios.post("http://localhost:3000/users", {
-                firstname: document.getElementById('firstname').value,
-                lastname: document.getElementById('lastname').value,
-                email: document.getElementById('email').value,
-                password: document.getElementById('password').value,
-                category: "user"
-            });
-            window.location.href = '/';
+        async signupSubmit() 
+        { 
+            var firstname = document.getElementById('firstname').value;
+            if (firstname.length == 0)
+            {
+                this.firstnameError = "Field is empty"
+            }
+            else
+            {
+                this.firstnameError = null
+            }
+
+            var lastname = document.getElementById('lastname').value;
+            if (lastname.length == 0)
+            {
+                this.lastnameError = "Field is empty"
+            }
+            else
+            {
+                this.lastnameError = null
+            }
+
+            var email = document.getElementById('email').value;
+            if(email.length == 0)
+            {
+                this.emailError = "Field is empty";
+            }
+            else 
+            {
+                this.emailError = null
+            }
+
+            try{
+                const res = await axios.get(userURL);
+                this.users = res.data;
+            }
+            catch(e){
+                console.error(e);
+            }
+            
+            for (var i = 0; i < this.users.length; i++)
+            {
+                if(this.users[i].email == document.getElementById('email').value)
+                { 
+                    this.signupValidation = false; 
+                    this.emailError = "this email address is already in use!"
+                    console.log(this.users[i].email);
+                } 
+            }
+            var password = document.getElementById('password').value;
+            if(password.length == 0)
+            {
+                this.passwordError = "Field is empty!";
+            }
+            else if(password.length>0 && password.length<8)
+            { 
+                this.passwordError = "Password is too short!"
+            }
+            else
+            {
+                this.passwordError = null
+            }
+       
+            
+        if(this.firstnameError == null && this.lastnameError == null && this.emailError == null && this.passwordError == null)
+        {
+            if(this.signupValidation == true)
+                {
+                    const res = await axios.post("http://localhost:3000/users", 
+                    {
+                        firstname: document.getElementById('firstname').value,
+                        lastname: document.getElementById('lastname').value,
+                        email: document.getElementById('email').value,
+                        password: document.getElementById('password').value,
+                        category: "user"
+                    });
+                    window.location.href = '/';
+                }
+            }
         }
     }
 }
+
 </script>
 
 <style scoped>
@@ -182,7 +295,7 @@ button {
 
 .submit button.is-active,
 .submit button:hover {
-    background-color: #00ff00;
+    background-color: #198754;
 }
 
 .error {
@@ -240,12 +353,16 @@ form {
 }
 
 .colored:hover {
-    color: #00ff00;
+    color: #198754;
     text-decoration: underline;
 }
 
 h1 {
     padding-top: 8%;
+}
+
+h6 {
+    color: red;
 }
 
 </style>

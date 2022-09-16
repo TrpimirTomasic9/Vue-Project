@@ -3,9 +3,9 @@
     <div class="pagetitle">
         <h1 class="text-center">My Watched movies</h1>
     </div>
-    <div class="container">
-        <div v-for='movie in movies' :key='movie.id'>
-            <div class="card mb-4 mr-2 ml-2" v-if="movie.watched == 'yes'">
+    <div class="container" v-if='movies'>
+        <div v-for='movie in movieswatched' :key='movie.movieid'>
+            <div class="card mb-4 mr-2 ml-2">
                 <div class="card-horizontal">
                     <div class="view overlay">
                         <img class="card-img-top" v-bind:src='movie.image' :alt='movie.title'>
@@ -48,87 +48,88 @@
 import axios from 'axios';
 var baseURL = 'http://localhost:3000/'
 
+
 export default {
     data() {
         return {
+            movieswatched: [],
             movies: [],
-            counter: 0
+            userid: $cookies.get('id')
         }
     },
     async mounted() {
         try {
-            const res = await axios.get(baseURL + 'movies');
+            const res = await axios.get(baseURL + 'user-movies-watched');
             this.movies = res.data;
         } catch (e) {
             console.error(e)
         }
-        for (var i = 0; i < this.movies.length; i++) {
-            if (this.movies[i].watched == 'yes') {
-                this.counter++
-            }
-        }
-
+        this.movies.forEach(async (item) => {
+            const {data: movie} = await axios.get(baseURL + `movies/${item.id}`)
+            console.log(movie)
+            this.movieswatched.push(movie)
+        })
     },
     methods: {
         async removeCard(index) {
-            await axios.put(baseURL + 'movies/' + index, {
+            await axios.delete(baseURL + 'user-movies-watched/' + index, {
                 id: index,
-                title: this.movies[index - 1].title,
-                details: this.movies[index - 1].details,
-                description: this.movies[index - 1].description,
-                image: this.movies[index - 1].image,
-                watchlist: this.movies[index - 1].watchlist,
-                favourite: this.movies[index - 1].watchlist,
-                watched: "no"
+                userid: this.userid,
+                movieid: this.movieid,
+                watched: this.watched
             });
-            try {
-                const res = await axios.get(baseURL + 'movies');
-                this.movies = res.data;
-            } catch (e) {
-                console.error(e)
-            }
-            for (var i = 0; i < this.movies.length; i++) {
-                if (this.movies[i].watched == 'yes') {
-                    this.counter++
+            location.reload();
+        },
+        async addToFavourites(movieid) {
+            var {data: movies} = await axios.get(baseURL + "user-movies-favourites");
+            console.log(movies)
+
+            var body = {
+                        userid: this.userid,
+                        movieid: movieid,
+                        favourite: true
+                        
+                    }
+
+            var id = null;
+
+            movies.forEach(element => {
+                if(element.userid === this.userid && element.movieid === movieid){
+                    id = element.id;
                 }
-            }
-        },
-        async addToFavourites(index) {
-            await axios.put(baseURL + 'movies/' + index, {
-                id: index,
-                title: this.movies[index - 1].title,
-                details: this.movies[index - 1].details,
-                description: this.movies[index - 1].description,
-                image: this.movies[index - 1].image,
-                watchlist: this.movies[index - 1].watchlist,
-                favourite: "yes",
-                watched: this.movies[index - 1].watched
+                
             });
-            try {
-                const res = await axios.get(baseURL + 'movies');
-                this.movies = res.data;
-            } catch (e) {
-                console.error(e)
+            if(id){
+                await axios.delete(baseURL + "user-movies-favourites/" + id)
             }
+            
+            await axios.post(baseURL + "user-movies-favourites", body)
+
         },
-        async addToWatchlist(index) {
-            await axios.put(baseURL + 'movies/' + index, {
-                id: index,
-                title: this.movies[index - 1].title,
-                details: this.movies[index - 1].details,
-                description: this.movies[index - 1].description,
-                image: this.movies[index - 1].image,
-                watchlist: "yes",
-                favourite: this.movies[index - 1].favourite,
-                watched: this.movies[index - 1].watched,
+        async addToWatchlist(movieid) {
+            var {data: movies} = await axios.get(baseURL + "user-movies-watchlist");
+            console.log(movies)
+            var body = {
+                        userid: this.userid,
+                        movieid: movieid,
+                        watchlist: true
+                    }
+
+            var id = null;
+
+            movies.forEach(element => {
+                if(element.userid === this.userid && element.movieid === movieid){
+                    id = element.id;
+                }
+                
             });
-            try {
-                const res = await axios.get(baseURL + 'movies');
-                this.movies = res.data;
-            } catch (e) {
-                console.error(e)
+            if(id){
+                await axios.delete(baseURL + "user-movies-watchlist/" + id)
             }
-        }
+            
+            await axios.post(baseURL + "user-movies-watchlist", body)
+
+        },
     }
 }
 </script>

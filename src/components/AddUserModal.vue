@@ -4,19 +4,22 @@
             <div class="mb-3">
                 <form>
                     <center>
-                        <button @click="$emit('closeModal');" class='classX'>X</button>
+                        <button @click="$emit('closeModal');" class='classX'>x</button>
                         <h1 class='text-center'>Add User</h1>
                         <label>First Name:</label>
                         <input type="text" placeholder="Enter First Name" id="firstname">
+                        <div class="input-message" v-if="firstnameError"><h6>{{firstnameError}}</h6></div>
                         <label>Last Name:</label>
                         <input type="text" placeholder="Enter Last Name" id="lastname">
+                        <div class="input-message" v-if="lastnameError"><h6>{{lastnameError}}</h6></div>
                         <label>Email:</label>
                         <input type='email' placeholder="Enter Email" id="email">
+                        <div class="input-message" v-if="emailError"><h6>{{emailError}}</h6></div>
                         <label>Password:</label>
                         <input type='password' placeholder="Enter Password" id="password">
-                        <div v-if="passwordError" class="error">{{ passwordError }}</div>
+                        <div class="input-message" v-if="passwordError"><h6>{{passwordError}}</h6></div>
                         <div class="submit mb-3">
-                            <button class="btn btn-light mt-3" @click="AddUser">Add</button>
+                            <a id="addbtn" class="btn btn-light mt-3" @click="AddUser">Add</a>
                         </div>
                     </center>
                 </form>
@@ -26,37 +29,108 @@
 </template>
 
 <script>
-    import axios from 'axios';
-    var baseURL = 'http://localhost:3000/'
+import axios from 'axios';
+var baseURL = 'http://localhost:3000/'
+var userURL = baseURL + "users";
 
     export default {
         data() {
             return {
-
-                name: '',
-                lastname: '',
-                email: '',
-                password: '',
-                passwordError: ''
-
+            users: [],
+            email: null,
+            password: null,
+            emailError: null,
+            passwordError: null,
+            firstname: null,
+            firstnameError: null,
+            lastname: null,
+            lastnameError: null,
+            signupValidation : true
             }
         },
         methods: {
             async AddUser() {
-                console.log('form AddUser submitted')
-                this.passwordError = this.password.length > 8 ? '' : 'Password must be at least 8 characters long'
 
-                const res = await axios.post("http://localhost:3000/users", {
-                    firstname: document.getElementById('firstname').value, 
-                    lastname: document.getElementById('lastname').value, 
-                    email: document.getElementById('email').value, 
-                    password: document.getElementById('password').value,
-                    category: "user"
-                });
+            var firstname = document.getElementById('firstname').value;
+            if (firstname.length == 0)
+            {
+                this.firstnameError = "Field is empty"
+            }
+            else
+            {
+                this.firstnameError = null
+            }
+
+            var lastname = document.getElementById('lastname').value;
+            if (lastname.length == 0)
+            {
+                this.lastnameError = "Field is empty"
+            }
+            else
+            {
+                this.lastnameError = null
+            }
+
+            var email = document.getElementById('email').value;
+            if(email.length == 0)
+            {
+                this.emailError = "Field is empty";
+            }
+            else 
+            {
+                this.emailError = null
+            }
+
+            try{
+                const res = await axios.get(userURL);
+                this.users = res.data;
+            }
+            catch(e){
+                console.error(e);
+            }
+            
+            for (var i = 0; i < this.users.length; i++)
+            {
+                if(this.users[i].email == document.getElementById('email').value)
+                { 
+                    this.signupValidation = false; 
+                    this.emailError = "this email address is already in use!"
+                    console.log(this.users[i].email);
+                } 
+            }
+            var password = document.getElementById('password').value;
+            if(password.length == 0)
+            {
+                this.passwordError = "Field is empty!";
+            }
+            else if(password.length>0 && password.length<8)
+            { 
+                this.passwordError = "Password is too short!"
+            }
+            else
+            {
+                this.passwordError = null
+            }
+
+            if(this.firstnameError == null && this.lastnameError == null && this.emailError == null && this.passwordError == null)
+            {
+            if(this.signupValidation == true)
+                {
+                    const res = await axios.post("http://localhost:3000/users", 
+                    {
+                        firstname: document.getElementById('firstname').value,
+                        lastname: document.getElementById('lastname').value,
+                        email: document.getElementById('email').value,
+                        password: document.getElementById('password').value,
+                        category: "user"
+                    });
                 this.users = [...this.users, res.data];
+                window.location.href = '/dashboard';
+                }
             }
         }
-    } 
+    }
+} 
 </script> 
 
 <style scoped>
@@ -88,6 +162,7 @@ label,input {
     align-items: center;
     text-align: center;
     background-color: rgba(0, 0, 0, 0.5);
+
 }
 
 .modal-form {
@@ -102,11 +177,10 @@ label,input {
 }
 
 form {
+    /* margin: 30px auto; */
     background: #343a40;
     text-align: left;
     border-radius: 10px;
-    border: 4px solid #8c38ff;
-    padding-bottom: 5%;
 }
 
 label {
@@ -130,6 +204,21 @@ button {
     text-shadow: 1px 1px black;
 }
 
+#addbtn {
+    border: 0;
+    padding: 10px 20px;
+    margin-top: 30px;
+    color: black;
+    border-radius: 20px;
+    background-color: red;
+    text-shadow: 1px 1px black;
+}
+
+#addbtn:hover {
+    background-color: #198754;
+}
+
+
 .submit {
     text-align: center;
 }
@@ -146,12 +235,17 @@ button {
     font-weight: bold;
 }
 
+p {
+    text-align: center;
+    padding-top: 2em;
+    color: grey;
+}
+
 h1 {
     font-size: 2.3em;
     font-weight: bold;
     color: #8c38ff;
     text-shadow: 3px 3px black;
-    padding-top: 8%;
 }
 
 .close {
@@ -172,9 +266,33 @@ h1 {
     height: 100%;
 }
 
-.form-select {
-    width: 38%;
+form {
+    border: 4px solid #8c38ff;
+    padding-bottom: 5%;
 }
 
+.submit {
+    margin-top: 5%;
+}
+
+.switch-p {
+    margin-top: -6%;
+    color: whitesmoke;
+    display: inline;
+    text-shadow: 1px 1px black;
+}
+
+.colored:hover {
+    color: #198754;
+    text-decoration: underline;
+}
+
+h1 {
+    padding-top: 8%;
+}
+
+h6 {
+    color: red;
+}
 
 </style>

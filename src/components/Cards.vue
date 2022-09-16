@@ -30,6 +30,7 @@
 <script>
 import CardModal from './CardModal.vue';
 import axios from 'axios';
+import VueCookies from 'vue-cookies'
 
 var baseURL = 'http://localhost:3000/'
 
@@ -40,10 +41,12 @@ export default {
     data() {
         return {
             item: null,
+            userid: null,
             movies: []
         }
     },
     async mounted() {
+        this.userid = $cookies.get('id')
         try {
             const res = await axios.get(baseURL + 'movies');
             this.movies = res.data;
@@ -52,41 +55,55 @@ export default {
         }
     },
     methods: {
-        async addToWatchlist(index) {
-            await axios.put(baseURL + 'movies/' + index, {
-                id: index,
-                title: this.movies[index - 1].title,
-                details: this.movies[index - 1].details,
-                description: this.movies[index - 1].description,
-                image: this.movies[index - 1].image,
-                watchlist: "yes",
-                favourite: this.movies[index - 1].favourite,
-                watched: this.movies[index - 1].watched,
+        async addToWatchlist(movieid) {
+            var {data: movies} = await axios.get(baseURL + "user-movies-watchlist");
+            console.log(movies)
+            var body = {
+                        userid: this.userid,
+                        movieid: movieid,
+                        watchlist: true
+                    }
+
+            var id = null;
+
+            movies.forEach(element => {
+                if(element.userid === this.userid && element.movieid === movieid){
+                    id = element.id;
+                }
+                
             });
-            try {
-                const res = await axios.get(baseURL + 'movies');
-                this.movies = res.data;
-            } catch (e) {
-                console.error(e)
+            if(id){
+                await axios.delete(baseURL + "user-movies-watchlist/" + id)
             }
+            
+            await axios.post(baseURL + "user-movies-watchlist", body)
+
         },
-        async addToFavourites(index) {
-            await axios.put(baseURL + 'movies/' + index, {
-                id: index,
-                title: this.movies[index - 1].title,
-                details: this.movies[index - 1].details,
-                description: this.movies[index - 1].description,
-                image: this.movies[index - 1].image,
-                watchlist: this.movies[index - 1].watchlist,
-                favourite: "yes",
-                watched: this.movies[index - 1].watched
+        async addToFavourites(movieid) {
+            var {data: movies} = await axios.get(baseURL + "user-movies-favourites");
+            console.log(movies)
+
+            var body = {
+                        userid: this.userid,
+                        movieid: movieid,
+                        favourite: true
+                        
+                    }
+
+            var id = null;
+
+            movies.forEach(element => {
+                if(element.userid === this.userid && element.movieid === movieid){
+                    id = element.id;
+                }
+                
             });
-            try {
-                const res = await axios.get(baseURL + 'movies');
-                this.movies = res.data;
-            } catch (e) {
-                console.error(e)
+            if(id){
+                await axios.delete(baseURL + "user-movies-favourites/" + id)
             }
+            
+            await axios.post(baseURL + "user-movies-favourites", body)
+
         }
     }
 }
@@ -185,7 +202,7 @@ export default {
     }
 
     .card-body {
-        height: 24vh !important;
+        height: 37vh !important;
         display: flex;
         flex-direction: column;
     }
@@ -203,4 +220,66 @@ export default {
     }
 }
 
+/* 
+neuspjeli primjeri
+async addToWatchlist(movieid) {
+            var isInDatabase = false;
+            var movies = await axios.get(baseURL + "user-movies");
+
+            for(var i=0; i<movies.length; i++) {
+                if (movies[i].userid == this.userid && movies[i].movieid == movieid) {
+                    isInDatabase = true;
+                }
+            };
+            if (!isInDatabase) {
+                await axios.post(baseURL + "user-movies", {
+                userid: this.userid,
+                movieid: movieid,
+                watched: false,
+                favourite: false,
+                watchlist: true,
+                rating: null,
+                });
+            } 
+            else {
+                this.movie.watchlist = true;
+                await axios.put(baseURL + "user-movies/" + this.userMovies.movieid);
+            }
+
+        try {
+            const res = await axios.get(baseURL + "movies");
+            this.movies = res.data;
+        } catch (e) {
+            console.error(e);
+        } 
+        ---2---
+        async addToWatchlist(movieid) {
+            var {data: movies} = await axios.get(baseURL + "user-movies");
+            console.log(movies)
+            var body = {
+                        userid: this.userid,
+                        movieid: movieid,
+                        watched: false,
+                        favourite: false,
+                        watchlist: true,
+                        rating: null,
+                    }
+
+            var id = null;
+
+            movies.forEach(element => {
+                if(element.userid === this.userid && element.movieid === movieid){
+                    id = element.id;
+                }
+                
+            });
+            if(id){
+                await axios.delete(baseURL + "user-movies/" + id)
+            }
+            
+            await axios.post(baseURL + "user-movies", body)
+
+        },*/
+
 </style>
+

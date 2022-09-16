@@ -5,10 +5,10 @@
                 <form>
                     <center>
                         <button @click="$emit('closeModal');" class='classX'>X</button>
-                        <h1 class='text-center'>Jesate li sigurni?</h1>
+                        <h1 class='text-center'>Are you sure?</h1>
                         
                         <div class="submit mb-3">
-                            <a href="#" class="btn btn-light mt-3" @click="DeleteUser(id)">Delete</a>
+                            <a href="#" id="deletebtn"  class="btn btn-light mt-3" @click="DeleteUser(id)">Delete</a>
                         </div>
                     </center>
                 </form>
@@ -112,6 +112,20 @@ button {
     border-radius: 20px;
     background-color: red;
     text-shadow: 1px 1px black;
+}
+
+#deletebtn {
+    border: 0;
+    padding: 10px 20px;
+    margin-top: 30px;
+    color: black;
+    border-radius: 20px;
+    background-color: red;
+    text-shadow: 1px 1px black;
+}
+
+#deletebtn:hover{
+    background-color: #198754;
 }
 
 .submit {
