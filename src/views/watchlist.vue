@@ -68,7 +68,7 @@ export default {
             console.error(e)
         }
         this.movies.forEach(async (item) => {
-            const {data: movie} = await axios.get(baseURL + `movies/${item.id}`)
+            const {data: movie} = await axios.get(baseURL + `movies/${item.movieid}`)
             console.log(movie)
             this.movieswatchlist.push(movie)
         })

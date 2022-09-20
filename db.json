@@ -111,7 +111,47 @@
       "id": 3
     }
   ],
-  "user-movies-watchlist": [],
-  "user-movies-favourites": [],
-  "user-movies-watched": []
+  "user-movies-watchlist": [
+    {
+      "userid": null,
+      "movieid": 1,
+      "id": 1
+    },
+    {
+      "userid": null,
+      "movieid": 2,
+      "id": 2
+    },
+    {
+      "userid": null,
+      "movieid": 6,
+      "id": 3
+    }
+  ],
+  "user-movies-favourites": [
+    {
+      "userid": null,
+      "movieid": 3,
+      "id": 1
+    },
+    {
+      "userid": null,
+      "movieid": 5,
+      "id": 2
+    }
+  ],
+  "user-movies-watched": [
+    {
+      "userid": null,
+      "movieid": 3,
+      "watched": true,
+      "id": 1
+    },
+    {
+      "userid": null,
+      "movieid": 6,
+      "watched": true,
+      "id": 2
+    }
+  ]
 }
