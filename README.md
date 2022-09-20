@@ -16,28 +16,29 @@ pokretanje projekta :
 3. Node version : 8.13.2
 
 4. Npm list : 
--@vitejs/plugin-vue@3.0.3
 
--axios@0.27.2
+          -@vitejs/plugin-vue@3.0.3
 
--bootstrap@5.2.0
+          -axios@0.27.2
 
--cypress@10.6.0
+          -bootstrap@5.2.0
 
--jquery@3.6.1
+          -cypress@10.6.0
 
--json-server@0.4.2
+          -jquery@3.6.1
 
--popper.js@1.16.1
+          -json-server@0.4.2
 
--start-server-and-test@1.14.0
+          -popper.js@1.16.1
 
--vite@3.0.9
+          -start-server-and-test@1.14.0
 
--vue-cookies@1.8.1
+          -vite@3.0.9
 
--vue-router@4.1.5
+          -vue-cookies@1.8.1
 
--vue@3.2.37
+          -vue-router@4.1.5
 
--vuex@4.0.2
+          -vue@3.2.37
+
+          -vuex@4.0.2
