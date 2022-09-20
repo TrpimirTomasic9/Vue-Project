@@ -11,3 +11,6 @@ pokretanje projekta :
 2. vue.js : u terminal upisati : npm run dev
 
           - link u browseru je : http://localhost:5173/
+
+
+Node version : 8.13.2
