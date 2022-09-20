@@ -111,26 +111,7 @@
       "id": 3
     }
   ],
-  "user-movies-watchlist": [
-    {
-      "userid": "2",
-      "movieid": 7,
-      "watchlist": true,
-      "id": 1
-    },
-    {
-      "userid": "2",
-      "movieid": 8,
-      "watchlist": true,
-      "id": 2
-    },
-    {
-      "userid": "2",
-      "movieid": 9,
-      "watchlist": true,
-      "id": 3
-    }
-  ],
+  "user-movies-watchlist": [],
   "user-movies-favourites": [],
   "user-movies-watched": []
 }

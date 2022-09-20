@@ -75,8 +75,7 @@ export default {
             await axios.delete(baseURL + 'user-movies-watched/' + index, {
                 id: index,
                 userid: this.userid,
-                movieid: this.movieid,
-                watched: this.watched
+                movieid: this.movieid
             });
             location.reload();
         },
@@ -86,9 +85,7 @@ export default {
 
             var body = {
                         userid: this.userid,
-                        movieid: movieid,
-                        favourite: true
-                        
+                        movieid: movieid
                     }
 
             var id = null;
@@ -111,8 +108,7 @@ export default {
             console.log(movies)
             var body = {
                         userid: this.userid,
-                        movieid: movieid,
-                        watchlist: true
+                        movieid: movieid
                     }
 
             var id = null;

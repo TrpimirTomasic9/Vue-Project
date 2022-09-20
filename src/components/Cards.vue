@@ -61,7 +61,7 @@ export default {
             var body = {
                         userid: this.userid,
                         movieid: movieid,
-                        watchlist: true
+                        
                     }
 
             var id = null;
@@ -86,8 +86,6 @@ export default {
             var body = {
                         userid: this.userid,
                         movieid: movieid,
-                        favourite: true
-                        
                     }
 
             var id = null;
@@ -219,67 +217,6 @@ export default {
         flex-direction: column;
     }
 }
-
-/* 
-neuspjeli primjeri
-async addToWatchlist(movieid) {
-            var isInDatabase = false;
-            var movies = await axios.get(baseURL + "user-movies");
-
-            for(var i=0; i<movies.length; i++) {
-                if (movies[i].userid == this.userid && movies[i].movieid == movieid) {
-                    isInDatabase = true;
-                }
-            };
-            if (!isInDatabase) {
-                await axios.post(baseURL + "user-movies", {
-                userid: this.userid,
-                movieid: movieid,
-                watched: false,
-                favourite: false,
-                watchlist: true,
-                rating: null,
-                });
-            } 
-            else {
-                this.movie.watchlist = true;
-                await axios.put(baseURL + "user-movies/" + this.userMovies.movieid);
-            }
-
-        try {
-            const res = await axios.get(baseURL + "movies");
-            this.movies = res.data;
-        } catch (e) {
-            console.error(e);
-        } 
-        ---2---
-        async addToWatchlist(movieid) {
-            var {data: movies} = await axios.get(baseURL + "user-movies");
-            console.log(movies)
-            var body = {
-                        userid: this.userid,
-                        movieid: movieid,
-                        watched: false,
-                        favourite: false,
-                        watchlist: true,
-                        rating: null,
-                    }
-
-            var id = null;
-
-            movies.forEach(element => {
-                if(element.userid === this.userid && element.movieid === movieid){
-                    id = element.id;
-                }
-                
-            });
-            if(id){
-                await axios.delete(baseURL + "user-movies/" + id)
-            }
-            
-            await axios.post(baseURL + "user-movies", body)
-
-        },*/
 
 </style>
 
