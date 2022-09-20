@@ -8,6 +8,6 @@ pokretanje projekta :
                                        http://localhost:3000/user-movies-favourites
                                        http://localhost:3000/user-movies-watched
 
-2. vue.js : npm run dev
+2. vue.js : u terminal upisati : npm run dev
 
           - link u browseru je : http://localhost:5173/
