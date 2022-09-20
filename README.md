@@ -1,11 +1,13 @@
-# to-do?
+pokretanje projekta :
 
-- popraviti responzivnost na određenim rezolucijama
+1. json server : u terminal upisati : json-server --watch db.json
 
-- napraviti star-rating
+          - link u browseru je : http://localhost:3000/movies
+                                       http://localhost:3000/users 
+                                       http://localhost:3000/user-movies-watchlist
+                                       http://localhost:3000/user-movies-favourites
+                                       http://localhost:3000/user-movies-watched
 
-- napraviti da se za svakog usera spremaju njegovi podaci o filmovima
+2. vue.js : npm run dev
 
-- napraviti button komponentu i onda cu ko propsove slat sve sto mi treba za nju
-
-- napraviti validacije kod logina/registracije
+          - link u browseru je : http://localhost:5173/
