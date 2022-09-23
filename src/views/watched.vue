@@ -18,18 +18,7 @@
                         <h3 class="card-title mb-3"><a style="font-weight:bold">{{movie.title}}</a></h3>
                         <h5 class="card-subtitle mb-2 text-muted">{{movie.details}}</h5>
                         <p class="card-text">{{movie.description}}</p>
-                        <h6 class="ratepar">Rate this movie</h6>
-                        <div class="star_rating">
-                            <button class="star">&#9734;</button>
-                            <button class="star">&#9734;</button>
-                            <button class="star">&#9734;</button>
-                            <button class="star">&#9734;</button>
-                            <button class="star">&#9734;</button>
-                        </div>
-                        <h6 class="ratepar">
-                            My rate for this movie is :&nbsp;
-                            <p class="ratenum"> 5/5</p>
-                        </h6>
+                        <starrating @click="addToUserRating(movie.id)" @rating='check' ></starrating>
                         <div class="btn-group">                           
                             <button class="btn mr-3"><i class="fab">Watch Now</i></button>
                             <button class="btn mr-3" @click="addToWatchlist(movie.id)"><i class="fab">Watchlist</i></button>
@@ -45,11 +34,15 @@
 </template>
 
 <script>
+import StarRating from '../components/StarRating.vue';
 import axios from 'axios';
 var baseURL = 'http://localhost:3000/'
 
 
 export default {
+    components: {
+        'starrating': StarRating
+    }, 
     data() {
         return {
             movieswatched: [],
@@ -71,6 +64,33 @@ export default {
         })
     },
     methods: {
+         check(rating){
+            this.rating = rating
+        },
+        async addToUserRating(movieid) {
+            var {data: movies} = await axios.get(baseURL + "user-rating");
+            console.log(movies)
+            var body = {
+                        userid: this.userid,
+                        movieid: movieid,
+                        userRating: this.rating
+                    }
+
+            var id = null;
+
+            movies.forEach(element => {
+                if(element.userid === this.userid && element.movieid === movieid){
+                    id = element.id;
+                }
+                
+            });
+            if(id){
+                await axios.delete(baseURL + "user-rating/" + id)
+            }
+            
+            await axios.post(baseURL + "user-rating", body)
+
+        },
         async removeCard(index) {
             await axios.delete(baseURL + 'user-movies-watched/' + index, {
                 id: index,

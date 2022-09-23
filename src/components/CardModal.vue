@@ -10,18 +10,7 @@
                 <h6 class="text-muted">{{item.details}}</h6>
                 <p>{{item.description}}</p>
                 <div class="mobile-center">
-                    <h6 class="ratepar">Rate this movie</h6>
-                    <div class="star_rating">
-                        <button class="star">&#9734;</button>
-                        <button class="star">&#9734;</button>
-                        <button class="star">&#9734;</button>
-                        <button class="star">&#9734;</button>
-                        <button class="star">&#9734;</button>
-                    </div>
-                    <h6 class="ratepar mt-2">
-                        My rate for this movie is : &nbsp;
-                        <p class="ratenum"> 5/5</p>
-                    </h6>
+                    <starrating @click="addToUserRating(item.id)" @rating='check' ></starrating>
                     <div class="d-flex mobile-center-btn mt-4">
                         <!-- <button class="btn"><i class="fab">Watch</i></button>
                     <br /> -->
@@ -42,9 +31,14 @@ import axios from 'axios'
 var baseURL = 'http://localhost:3000/'
 import VueCookies from 'vue-cookies'
 
+import StarRating from '../components/StarRating.vue';
+
 export default {
+    components: {
+        'starrating': StarRating
+    },
     props: {
-        item: null
+        item: null,
     },
     data() {
         return {
@@ -62,14 +56,40 @@ export default {
         }
     },
     methods: {
+        check(rating){
+            this.rating = rating
+        },
+        async addToUserRating(movieid) {
+            var {data: movies} = await axios.get(baseURL + "user-rating");
+            console.log(movies)
+            var body = {
+                        userid: this.userid,
+                        movieid: movieid,
+
+                    }
+
+            var id = null;
+
+            movies.forEach(element => {
+                if(element.userid === this.userid && element.movieid === movieid){
+                    id = element.id;
+                }
+                
+            });
+            if(id){
+                await axios.delete(baseURL + "user-rating/" + id)
+            }
+            
+            await axios.post(baseURL + "user-rating", body)
+
+        },
         async addToWatchlist(movieid) {
-            /* var isInDatabase = false; */
             var {data: movies} = await axios.get(baseURL + "user-movies-watchlist");
             console.log(movies)
             var body = {
                         userid: this.userid,
                         movieid: movieid,
-                        watchlist: true
+                        userRating: this.rating
                     }
 
             var id = null;
@@ -93,9 +113,7 @@ export default {
 
             var body = {
                         userid: this.userid,
-                        movieid: movieid,
-                        favourite: true
-                        
+                        movieid: movieid
                     }
 
             var id = null;
@@ -119,9 +137,7 @@ export default {
 
             var body = {
                         userid: this.userid,
-                        movieid: movieid,
-                        watched: true
-                        
+                        movieid: movieid
                     }
 
             var id = null;

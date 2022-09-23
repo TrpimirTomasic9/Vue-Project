@@ -32,6 +32,7 @@ import CardModal from './CardModal.vue';
 import axios from 'axios';
 import VueCookies from 'vue-cookies'
 
+
 var baseURL = 'http://localhost:3000/'
 
 export default {

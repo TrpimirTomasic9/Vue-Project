@@ -105,53 +105,50 @@
     {
       "firstname": "user2",
       "lastname": "userman",
-      "email": "user23@gmail.com",
-      "password": "Sifra123456",
+      "email": "user3@gmail.com",
+      "password": "user12345",
       "category": "user",
       "id": 3
     }
   ],
   "user-movies-watchlist": [
     {
-      "userid": null,
-      "movieid": 1,
-      "id": 1
-    },
-    {
-      "userid": null,
+      "userid": "2",
       "movieid": 2,
       "id": 2
     },
     {
-      "userid": null,
-      "movieid": 6,
+      "userid": "2",
+      "movieid": 3,
       "id": 3
     }
   ],
-  "user-movies-favourites": [
+  "user-movies-favourites": [],
+  "user-movies-watched": [],
+  "user-rating": [
     {
-      "userid": null,
+      "userid": "2",
+      "movieid": 1,
+      "userRating": 2,
+      "id": 5
+    },
+    {
+      "userid": "2",
       "movieid": 3,
-      "id": 1
+      "userRating": 5,
+      "id": 7
+    },
+    {
+      "userid": "2",
+      "movieid": 2,
+      "userRating": 3,
+      "id": 8
     },
     {
       "userid": null,
-      "movieid": 5,
-      "id": 2
-    }
-  ],
-  "user-movies-watched": [
-    {
-      "userid": null,
-      "movieid": 3,
-      "watched": true,
-      "id": 1
-    },
-    {
-      "userid": null,
-      "movieid": 6,
-      "watched": true,
-      "id": 2
+      "movieid": 2,
+      "userRating": 5,
+      "id": 9
     }
   ]
 }
